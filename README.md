@@ -1,6 +1,6 @@
 # Book System Frontend
 
-這是一個基於 Vue.js 的圖書管理系統前端專案，使用 Element Plus 作為 UI 框架，並通過 Axios 與後端 API 進行通信。在啟動前端前，請先確保後端服務已經啟動。
+這是一個基於 Vue.js 的圖書管理系統前端專案，使用 Element Plus 作為 UI 框架，並通過 Axios 與後端 API 進行通信。在啟動前端前，請務必確保後端服務已經啟動。
 
 ## 環境設置
 
