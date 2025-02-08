@@ -75,8 +75,7 @@ export default {
               password: this.registerForm.password
             });
             if (response.status == 200) {
-              // @ts-ignore
-              this.$message.success('註冊成功');
+              alert('註冊成功');
               this.$router.push({ name: 'login' });
             } else {
               // @ts-ignore
