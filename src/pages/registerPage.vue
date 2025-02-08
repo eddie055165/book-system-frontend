@@ -51,6 +51,7 @@ export default {
         confirmPassword: [
           { required: true, message: '請確認密碼', trigger: 'blur' },
           { validator: (rule, value, callback) => {
+              // @ts-ignore
               if (value !== this.registerForm.password) {
                 callback(new Error('兩次輸入的密碼不一致'));
               } else {
@@ -64,22 +65,41 @@ export default {
   },
   methods: {
     async handleRegister() {
+      // @ts-ignore
       this.$refs.registerForm.validate(async (valid) => {
         if (valid) {
           try {
-            const response = await axios.post('/api/register', {
-              phone: this.registerForm.phone,
+            const response = await axios.post('http://localhost:8080/api/users/register', {
+              phoneNumber: this.registerForm.phone,
               username: this.registerForm.username,
               password: this.registerForm.password
             });
-            if (response.data.success) {
+            if (response.status == 200) {
+              // @ts-ignore
               this.$message.success('註冊成功');
               this.$router.push({ name: 'login' });
             } else {
+              // @ts-ignore
               this.$message.error(response.data.message || '註冊失敗');
             }
           } catch (error) {
-            this.$message.error('註冊失敗，請稍後再試');
+            // @ts-ignore
+            if (error.response.data == 'Invalid credentials') {
+              // @ts-ignore
+              this.$message.error('密碼錯誤');
+            } else if (error.response.data == 'User not found') {
+              // @ts-ignore
+              this.$message.error('電話錯誤');
+            } 
+            else if (error.response.data == 'Phone number already registered') {
+              // @ts-ignore
+              this.$message.error('此電話號碼已經有人使用');
+            }
+            else {
+                            // @ts-ignore
+
+              this.$message.error('註冊失敗，請稍後再試');
+            }
           }
         } else {
           console.log('表單驗證失敗');
