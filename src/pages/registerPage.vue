@@ -74,7 +74,7 @@ export default {
               username: this.registerForm.username,
               password: this.registerForm.password
             });
-            if (response.status == 200) {
+            if (response.status == 201) {
               alert('註冊成功');
               this.$router.push({ name: 'login' });
             } else {
