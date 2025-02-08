@@ -8,7 +8,7 @@
 首先，clone此專案到本地：
 
 ```bash
-git clone https://github.co/eddie055165/book-system-front.git
+git clone https://github.com/eddie055165/book-system-frontend.git
 cd book-system-front
 ```
 
