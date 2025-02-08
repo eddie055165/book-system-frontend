@@ -120,7 +120,7 @@ export default defineComponent({
           type: 'warning'
         });
         const response = await axios.post(`http://localhost:8080/api/borrowings/return?userId=${userId}&inventoryId=${book.inventoryId}`);
-        if (response.data.success) {
+        if (response.status == 200) {
           book.status = 'AVAILABLE';
           ElMessage({
             type: 'success',
