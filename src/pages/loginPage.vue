@@ -4,7 +4,7 @@
       <h2 class="login-title">登入</h2>
       <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px">
         <el-form-item label="電話" prop="phone">
-          <el-input v-model="loginForm.phone" autocomplete="off"></el-input>
+          <el-input v-model="loginForm.phoneNumber" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密碼" prop="password">
           <el-input type="password" v-model="loginForm.password" autocomplete="off"></el-input>
@@ -23,17 +23,18 @@
 
 <script>
 import axios from 'axios';
+// @ts-ignore
 import Cookies from 'js-cookie';
 
 export default {
   data() {
     return {
       loginForm: {
-        phone: '',
+        phoneNumber: '',
         password: ''
       },
       rules: {
-        phone: [
+        phoneNumber: [
           { required: true, message: '請輸入電話', trigger: 'blur' },
           { pattern: /^[0-9]{10}$/, message: '請輸入有效的電話號碼', trigger: 'blur' }
         ],
@@ -46,26 +47,35 @@ export default {
   },
   methods: {
     async handleLogin() {
+      // @ts-ignore
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
           try {
-            const response = await axios.post('/api/login', {
-              phone: this.loginForm.phone,
+            const response = await axios.post('http://localhost:8080/api/users/login', {
+              phoneNumber: this.loginForm.phoneNumber,
               password: this.loginForm.password
             });
-            if (response.data.success) {
-              Cookies.set('user', response.data.user, { expires: 1 });
-              Cookies.set('username', this.loginForm.phone, { expires: 1 });
+            console.log(response.status == 200);
+            if (response.status == 200) {
+              alert('登入成功')
+              Cookies.set('user', this.loginForm.phoneNumber, { expires: 1 });
+              // @ts-ignore
+              Cookies.set('username', this.loginForm.phoneNumber, { expires: 1 });
               this.$router.push({ name: 'home' });
             } else {
+              // @ts-ignore
               this.$message.error('電話或密碼錯誤');
             }
           } catch (error) {
             if (error.response.data == 'Invalid credentials') {
+              // @ts-ignore
               this.$message.error('密碼錯誤');
             } else if (error.response.data == 'User not found') {
+              // @ts-ignore
               this.$message.error('電話錯誤');
             } else {
+                            // @ts-ignore
+
               this.$message.error('登入失敗，請稍後再試');
             }
           }
